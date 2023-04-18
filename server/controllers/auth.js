@@ -53,13 +53,13 @@ function login(req, res) {
     .then((userStore) => {
       // console.log("Password : ", password);
       // console.log(userStore);
-      bcrypt.compare(password, userStore.password,(bcryptError, check ) =>{
-        if(bcryptError){
+      bcrypt.compare(password, userStore.password, (bcryptError, check) => {
+        if (bcryptError) {
           res.status(500).send({ msg: "Server error" });
-        }else if (!check){
-          res.status(400).send({ msg: "Incorrect password"});
-        }else if(!userStore.active){
-          res.status(401).send({ msg: "Unauthorized or inactive user"});
+        } else if (!check) {
+          res.status(400).send({ msg: "Incorrect password" });
+        } else if (!userStore.active) {
+          res.status(401).send({ msg: "Unauthorized or inactive user" });
         } else {
           res.status(200).send({
             access: jwt.createAccessToken(userStore),
@@ -73,7 +73,25 @@ function login(req, res) {
     });
 }
 
+function refreshAccessToken(req, res) {
+
+  const { token } = req.body;
+  if(!token) res.status(400).send({ msg: "Token required"});
+  const{ user_id } = jwt.decoded(token);
+
+  User.findOne({ _id: user_id }).exec()
+  .then((userStorage) => {
+    res.status(200).send({
+      accesToken: jwt.createAccessToken(userStorage)
+    })
+  })
+  .catch((error) => {
+    res.status(500).send({ msg: "Server error" });
+  });
+}
+
 module.exports = {
   register,
   login,
+  refreshAccessToken,
 };
