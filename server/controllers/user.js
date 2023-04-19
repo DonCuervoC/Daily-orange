@@ -1,9 +1,9 @@
-const User = require("../models/user")
+const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 async function getMe(req, res) {
 
     const { user_id } = req.user;
-
     const response = await User.findById(user_id);
 
     if (!response) {
@@ -11,10 +11,8 @@ async function getMe(req, res) {
     } else {
         res.status(200).send(response);
     }
-
     // console.log(req.user);
     // res.status(200).send({ msg: "OK" });
-
 }
 
 async function getUsers(req, res) {
@@ -22,7 +20,6 @@ async function getUsers(req, res) {
     const { active } = req.query;
     //{{ _.BASE_PATH }}/users?active=false
     //console.log("active -> ", active);
-
     let response = null;
 
     if (active === undefined) {
@@ -30,17 +27,34 @@ async function getUsers(req, res) {
     } else {
         response = await User.find({ active });
     }
-
     // console.log(response);
     // res.status(200).send({ msg: "OK" });
-
     res.status(200).send(response);
-
 }
 
+async function createUser(req, res) {
 
+    const { password } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hasPassword = bcrypt.hashSync(password, salt);
+
+    const user = new User({ ...req.body, active: false, password: hasPassword });
+    console.log(user);
+
+    if (req.files.avatar) {
+        console.log("Process avatar needed");
+    }
+
+    try {
+        const userStored = await user.save();
+        res.status(201).send(userStored);
+    } catch (error) {
+        res.status(400).send({ msg: "Error while creating user" });
+    }
+}
 
 module.exports = {
     getMe,
     getUsers,
+    createUser,
 };
