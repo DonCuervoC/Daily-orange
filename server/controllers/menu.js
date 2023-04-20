@@ -12,9 +12,32 @@ async function createMenu(req, res) {
     }
 }
 
+async function getMenus(req, res) {
+
+    const { active } = req.params;
+
+    let response = null;
+
+    if (active === undefined) {
+        response = await Menu.find().sort({ order: "asc"});
+    } else {
+        response = await Menu.find({ active }).sort({ order: "asc"});
+    }
+
+    if (!response.length) {
+        res.status(400).send({msg: "No menus were found"});
+    } else {
+        res.status(200).send(response);
+    }
+}
+
+
+
 module.exports = {
 
     createMenu,
+    getMenus,
+
 };
 
 
