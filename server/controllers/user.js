@@ -40,7 +40,7 @@ async function createUser(req, res) {
     const hasPassword = bcrypt.hashSync(password, salt);
 
     const user = new User({ ...req.body, active: false, password: hasPassword });
-   // console.log(user);
+    // console.log(user);
 
     if (req.files.avatar) {
 
@@ -57,8 +57,40 @@ async function createUser(req, res) {
     }
 }
 
+async function updateUser(req, res) {
+
+    const { id } = req.params;
+    const userData = req.body;
+
+    //password
+    if(userData.password){
+        const salt = bcrypt.genSaltSync(10);
+        const hasPassword = bcrypt.hashSync(userData.password, salt);
+        userData.password = hasPassword;
+    }else{
+        delete userData.password;
+    }
+    
+    //avatar
+    if(req.files.avatar){
+       // console.log(req.files.avatar);
+       const imagePath = image.getFilePath(req.files.avatar);
+       userData.avatar = imagePath;
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(id, userData);
+        res.status(200).send({ msg: "Update OK" });
+    } catch (error) {
+        res.status(400).send({ msg: "Error while updating user" });
+    }
+}
+
+
+
 module.exports = {
     getMe,
     getUsers,
     createUser,
+    updateUser,
 };
