@@ -87,10 +87,23 @@ async function updateUser(req, res) {
 }
 
 
+async function deleteUser(req, res) {
+
+    const { id } = req.params;
+
+    try {
+        await User.findByIdAndDelete(id);
+        res.status(200).send({ msg: "User deleted" });
+    } catch (error) {
+        res.status(400).send({ msg: "Error while deleting user" });
+    }
+
+}
 
 module.exports = {
     getMe,
     getUsers,
     createUser,
     updateUser,
+    deleteUser,
 };
