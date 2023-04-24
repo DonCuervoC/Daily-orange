@@ -9,10 +9,14 @@ const api = express.Router();
 //Endpoint
 //add
 api.post("/post", [md_auth.asureAuth, md_upload], postController.createPost);
-//get
-api.get("/post",  postController.getPost);
+//get posts list
+api.get("/post",  postController.getPosts);
 //update
 api.patch("/post/:id", [md_auth.asureAuth, md_upload], postController.updatePost);
+// delete
+api.delete("/post/:id", [md_auth.asureAuth], postController.deletePost);
+//get one post by path
+api.get("/post/:path", postController.getPost);
 
 
 module.exports = api;

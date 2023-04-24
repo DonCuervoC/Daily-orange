@@ -19,7 +19,7 @@ async function createPost(req, res) {
     }
 }
 
-async function getPost(req, res) {
+async function getPosts(req, res) {
 
     const { page = 1, limit = 10 } = req.query;
 
@@ -47,7 +47,6 @@ async function updatePost(req, res) {
         const imagePath = image.getFilePath(req.files.miniature);
         postData.miniature = imagePath;
     }
-
     try {
         const updatedPost = await post.findByIdAndUpdate(id, postData, { new: true });
         res.status(200).send({ msg: "post updated OK", post: updatedPost });
@@ -57,12 +56,43 @@ async function updatePost(req, res) {
     }
 }
 
+async function deletePost(req, res) {
+
+    const { id } = req.params;
+    try {
+        const deletedPost = await post.findByIdAndDelete(id);
+        res.status(200).send({ msg: "post deleted OK", post: deletedPost });
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({ msg: "Error while deleting posts" });
+    }
+}
+
+async function getPost(req, res) {
+
+    const { path } = req.params;
+
+    try {
+        const postStored = await post.findOne({ path }).exec();
+
+        if (!postStored) {
+            res.status(400).send({ msg: "No post was found" });
+        } else {
+            res.status(200).send(postStored);
+        }
+    } catch (error) {
+        res.status(500).send({ msg: "Error on server" });
+    }
+}
+
 
 
 module.exports = {
 
     createPost,
-    getPost,
+    getPosts,
     updatePost,
+    deletePost,
+    getPost,
 
 };
