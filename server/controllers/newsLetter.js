@@ -39,18 +39,31 @@ async function getSuscribers(req, res){
     Newsletter.paginate({},options,(error, emailsStored) => {
 
         if(error){
-            res.status(400).json({ msg: "Error error while getting suscribers" });
+            res.status(400).json({ msg: "Error  while getting suscribers" });
         }else{
             res.status(400).json(emailsStored);
         }
     })
-
 }
+
+async function deleteSuscriberByID(req, res) {
+
+    try {
+
+      const { id } = req.params;
+      await Newsletter.findByIdAndDelete(id);
+      res.status(200).json({ msg: "Suscriber was deleted" });
+      
+    } catch (error) {
+      res.status(400).json({ msg: "Error while deleting suscriber" });
+    }
+  }
 
 
 module.exports = {
 
     subscribe,
     getSuscribers,
+    deleteSuscriberByID,
 
 };
