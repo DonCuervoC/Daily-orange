@@ -11,7 +11,7 @@ const PostSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
-    create_at: Date,
+    created_at: Date,
     
 });
 
