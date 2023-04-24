@@ -8,6 +8,7 @@ const api = express.Router();
 
 //Endpoint
 api.post("/post", [md_auth.asureAuth, md_upload], postController.createPost);
+api.get("/post",  postController.getPost);
 
 
 
