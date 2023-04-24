@@ -1,4 +1,6 @@
 const Newsletter = require("../models/newsLetter");
+const validator = require('validator');
+
 
 //Functions
 async function subscribe(req, res) {
@@ -24,9 +26,31 @@ async function subscribe(req, res) {
     }
 }
 
+async function getSuscribers(req, res){
+
+    const { page = 1, limit = 10 } = req.query;
+
+    const options ={
+
+        page: parseInt(page),
+        limit: parseInt(limit),
+    };
+
+    Newsletter.paginate({},options,(error, emailsStored) => {
+
+        if(error){
+            res.status(400).json({ msg: "Error error while getting suscribers" });
+        }else{
+            res.status(400).json(emailsStored);
+        }
+    })
+
+}
+
 
 module.exports = {
 
     subscribe,
+    getSuscribers,
 
 };

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const NewsLetterSchemma = mongoose.Schema({
 
@@ -10,5 +11,7 @@ const NewsLetterSchemma = mongoose.Schema({
     lastName: String,
 
 });
+
+NewsLetterSchemma.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Newsletter", NewsLetterSchemma);
