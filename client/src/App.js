@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'semantic-ui-react'
 
 export default function App() {
   return (
@@ -6,6 +7,10 @@ export default function App() {
       <h1>
         We're on my Web
       </h1>
+      <div>
+        <Button primary>Primary</Button>
+        <Button secondary>Secondary</Button>
+      </div>
     </div>
   )
 }
