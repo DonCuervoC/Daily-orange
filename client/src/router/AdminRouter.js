@@ -1,9 +1,11 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
+//import { map } from "lodash";
 import { AdminLayout } from "../layouts";
-import { Auth, Users } from "../pages/admin";
+import { Auth, Users, Blog } from "../pages/admin";
 
-const user = null;
+//const user = null;
+const user = { email: "nelson.cuervo89@gmail.com" };
 
 export function AdminRouter() {
     const loadLayout = (Layout, Page) => {
@@ -18,12 +20,67 @@ export function AdminRouter() {
         <Routes>
             {/* <Route path='/admin/*' element={<Auth/>} /> */}
             {!user ? (
-                <Route path='/admin/*' element={loadLayout(AdminLayout, Auth)} />
+                <Route path="/admin/*" element={loadLayout(AdminLayout, Auth)} />
             ) : (
                 <>
-                    <Route path='/admin/users' element={loadLayout(AdminLayout, Users)} />
+                    {["/admin", "/admin/blog"].map((path) => (
+                    <Route key={path} path={path} element={loadLayout(AdminLayout, Blog)} />                        
+                    ))}
+                    {/* <Route path='/admin' element={loadLayout(AdminLayout, Users)} /> */}
+                    <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
                 </>
             )}
         </Routes>
     );
 }
+
+
+// If I would like to add more routes, with a switch case its possible
+/* 
+
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import { AdminLayout } from "../layouts";
+import { Auth, Users, Blog, Info } from "../pages/admin";
+
+const user = { email: "nelson.cuervo89@gmail.com" };
+
+export function AdminRouter() {
+  const loadLayout = (Layout, Page) => {
+    return (
+      <Layout>
+        <Page />
+      </Layout>
+    );
+  };
+
+  return (
+    <Routes>
+      {!user ? (
+        <Route path="/admin/*" element={loadLayout(AdminLayout, Auth)} />
+      ) : (
+        <>
+          {["/admin", "/admin/blog", "/admin/info"].map((path) => (
+            <Route key={path} path={path} element={loadLayout(AdminLayout, getPageComponent(path))} />
+          ))}
+          <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
+        </>
+      )}
+    </Routes>
+  );
+}
+
+function getPageComponent(path) {
+  switch(path) {
+    case "/admin":
+      return Users;
+    case "/admin/blog":
+      return Blog;
+    case "/admin/info":
+      return Info;
+    default:
+      return null;
+  }
+}
+
+*/
