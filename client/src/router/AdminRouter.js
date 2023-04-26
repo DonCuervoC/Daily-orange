@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 //import { map } from "lodash";
 import { AdminLayout } from "../layouts";
-import { Auth, Users, Blog } from "../pages/admin";
+import { Auth, Users, Blog, Courses, News , Menu, Exchange, NewsLetter} from "../pages/admin";
 
 //const user = null;
 const user = { email: "nelson.cuervo89@gmail.com" };
@@ -28,6 +28,11 @@ export function AdminRouter() {
                     ))}
                     {/* <Route path='/admin' element={loadLayout(AdminLayout, Users)} /> */}
                     <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
+                    <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
+                    <Route path="/admin/news" element={loadLayout(AdminLayout, News)} />
+                    <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
+                    <Route path="/admin/exchange" element={loadLayout(AdminLayout, Exchange)} />
+                    <Route path="/admin/newsletter" element={loadLayout(AdminLayout, NewsLetter)} />
                 </>
             )}
         </Routes>
@@ -35,7 +40,7 @@ export function AdminRouter() {
 }
 
 
-// If I would like to add more routes, with a switch case its possible
+// If I would like to add more routes, with a switch case its possible, check example below :
 /* 
 
 import React from 'react';
@@ -82,5 +87,4 @@ function getPageComponent(path) {
       return null;
   }
 }
-
 */
