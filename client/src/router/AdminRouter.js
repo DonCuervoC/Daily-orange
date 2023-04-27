@@ -2,41 +2,42 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 //import { map } from "lodash";
 import { AdminLayout } from "../layouts";
-import { Auth, Users, Blog, Courses, News , Menu, Exchange, NewsLetter} from "../pages/admin";
+import { Auth, Users, Blog, Courses, News, Menu, Exchange, NewsLetter } from "../pages/admin";
 
-//const user = null;
-const user = { email: "nelson.cuervo89@gmail.com" };
+const user = null;
+//const user = { email: "nelson.cuervo89@gmail.com" };
 
 export function AdminRouter() {
-    const loadLayout = (Layout, Page) => {
-        return (
-            <Layout>
-                <Page />
-            </Layout>
-        );
-    };
-
+  const loadLayout = (Layout, Page) => {
     return (
-        <Routes>
-            {/* <Route path='/admin/*' element={<Auth/>} /> */}
-            {!user ? (
-                <Route path="/admin/*" element={loadLayout(AdminLayout, Auth)} />
-            ) : (
-                <>
-                    {["/admin", "/admin/blog"].map((path) => (
-                    <Route key={path} path={path} element={loadLayout(AdminLayout, Blog)} />                        
-                    ))}
-                    {/* <Route path='/admin' element={loadLayout(AdminLayout, Users)} /> */}
-                    <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
-                    <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
-                    <Route path="/admin/news" element={loadLayout(AdminLayout, News)} />
-                    <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
-                    <Route path="/admin/exchange" element={loadLayout(AdminLayout, Exchange)} />
-                    <Route path="/admin/newsletter" element={loadLayout(AdminLayout, NewsLetter)} />
-                </>
-            )}
-        </Routes>
+      <Layout>
+        <Page />
+      </Layout>
     );
+  };
+
+  return (
+    <Routes>
+
+      {!user ? (
+        <Route path='/admin/*' element={<Auth />} />
+        // <Route path="/admin/*" element={loadLayout(AdminLayout, Auth)} />
+      ) : (
+        <>
+          {["/admin", "/admin/blog"].map((path) => (
+            <Route key={path} path={path} element={loadLayout(AdminLayout, Blog)} />
+          ))}
+          {/* <Route path='/admin' element={loadLayout(AdminLayout, Users)} /> */}
+          <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
+          <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
+          <Route path="/admin/news" element={loadLayout(AdminLayout, News)} />
+          <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
+          <Route path="/admin/exchange" element={loadLayout(AdminLayout, Exchange)} />
+          <Route path="/admin/newsletter" element={loadLayout(AdminLayout, NewsLetter)} />
+        </>
+      )}
+    </Routes>
+  );
 }
 
 
