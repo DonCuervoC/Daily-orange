@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import {Tab} from "semantic-ui-react";
+import { RegisterForm } from '../../../components/Admin/Auth';
 import { Icon } from "../../../assets";
 import "./Auth.scss";
+
 
 
 export  function Auth() {
@@ -24,7 +26,8 @@ const panes = [
     menuItem: "New user",
     render: () =>(
       <Tab.Pane>
-        <h2>Register FORM</h2>
+        {/* <h2>Register FORM</h2> */}
+        <RegisterForm openLogin={openLogin}/>
       </Tab.Pane>
     ),
   },
