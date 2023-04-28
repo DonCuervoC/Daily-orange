@@ -17,10 +17,10 @@ export class Auth {
                     password: data.password
                 }),
             }
-           // console.log(url);
-           // console.log(params);
+            // console.log(url);
+            // console.log(params);
             const response = await fetch(url, params);
-           // console.log(response.status);
+            // console.log(response.status);
             const result = await response.json();
             if (response.status !== 200) throw result;
 
@@ -29,4 +29,31 @@ export class Auth {
             throw error;
         }
     }
+
+    async login(data) {
+
+        try {
+            const url = `${this.baseApi}/${ENV.API_ROUTES.LOGIN}`;
+            const params = {
+
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+
+            const response = await fetch(url, params);
+
+            const result = await response.json();
+
+            if (response.status !== 200) throw result;
+            return result;
+
+        } catch (error) {
+            console.log(error);
+            throw (error);
+        }
+    }
+
 }
