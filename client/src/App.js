@@ -12,6 +12,5 @@ export default function App() {
         <AdminRouter />
       </BrowserRouter>
     </AuthProvider>
-
   );
 }

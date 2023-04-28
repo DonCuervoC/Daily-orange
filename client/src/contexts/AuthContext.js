@@ -8,25 +8,25 @@ export function AuthProvider(props) {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        //Ckeck if user is logged in
-        // return () => {
-        //     // second
-        // }
-    }, [ /*third */])
 
+    }, []);
 
-    const login = async (acessToken) => {
-        console.log("Login context");
-        console.log(acessToken);
+    const login = async (accessToken) => {
 
+        try {
+            console.log("TOKEN : ", accessToken);
+            setUser({ username: "Nelson" });
+            setToken(accessToken);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const data = {
-
         accessToken: token,
         user,
         login,
-    }
+    };
 
     return <AuthContext.Provider value={data}> {children} </AuthContext.Provider>
 }
