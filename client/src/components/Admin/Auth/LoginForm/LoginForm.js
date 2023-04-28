@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 import { Form } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import { Auth } from '../../../../api';
@@ -21,6 +21,9 @@ export function LoginForm() {
                 //  console.log(formValue);
                 const response = await authController.login(formValue);
                 // console.log(response.access);
+                authController.setAccessToken(response.access);
+                authController.setRefreshToken(response.refresh);
+
                 login(response.access);
                 //console.log(login);
             } catch (error) {
