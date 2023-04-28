@@ -3,11 +3,17 @@ import { Routes, Route } from "react-router-dom";
 //import { map } from "lodash";
 import { AdminLayout } from "../layouts";
 import { Auth, Users, Blog, Courses, News, Menu, Exchange, NewsLetter } from "../pages/admin";
+import { useAuth } from '../hooks/useAuth';
 
-const user = null;
+//const user = null;
 //const user = { email: "nelson.cuervo89@gmail.com" };
 
 export function AdminRouter() {
+
+ // console.log(useAuth());
+  const {user} = useAuth();
+
+
   const loadLayout = (Layout, Page) => {
     return (
       <Layout>
