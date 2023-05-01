@@ -3,8 +3,8 @@ import { Icon } from "../../assets";
 import { AdminMenu } from "../../components/Admin/AdminLayout";
 import "./AdminLayout.scss";
 
-
 export function AdminLayout(props) {
+
 
   const { children } = props;
   return (
