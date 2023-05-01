@@ -74,7 +74,6 @@ export function AuthProvider(props) {
     };
 
     const logout = () => {
-
         setUser(null);
         setToken(null);
         authController.removeTokens();
