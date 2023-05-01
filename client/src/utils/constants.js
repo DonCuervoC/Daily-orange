@@ -11,5 +11,5 @@ export const ENV = {
     JWT: {
         ACCESS: "access",
         REFRESH: "refresh",
-    }
+    },
 };

@@ -63,7 +63,7 @@ function login(req, res) {
         } else {
           res.status(200).send({
             access: jwt.createAccessToken(userStore),
-            refresg: jwt.createRefreshToken(userStore),
+            refresh: jwt.createRefreshToken(userStore),
           });
         }
       });

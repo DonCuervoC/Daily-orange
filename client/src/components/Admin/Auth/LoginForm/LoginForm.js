@@ -1,9 +1,9 @@
-//import React, { useState } from 'react';
-import { Form } from 'semantic-ui-react';
-import { useFormik } from 'formik';
-import { Auth } from '../../../../api';
-import { useAuth } from '../../../../hooks';
-import { initialValues, validationSchema } from './LoginForm.form';
+import React from 'react';
+import { Form } from "semantic-ui-react";
+import { useFormik } from "formik";
+import { Auth } from "../../../../api";
+import { useAuth } from "../../../../hooks";
+import { initialValues, validationSchema } from "./LoginForm.form";
 
 const authController = new Auth();
 
@@ -20,8 +20,10 @@ export function LoginForm() {
             try {
                 //  console.log(formValue);
                 const response = await authController.login(formValue);
+                console.log(response);
                 // console.log(response.access);
                 authController.setAccessToken(response.access);
+                //console.log(response.refresh);
                 authController.setRefreshToken(response.refresh);
 
                 login(response.access);
