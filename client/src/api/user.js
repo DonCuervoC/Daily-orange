@@ -59,6 +59,27 @@ export class User {
         } catch (error) {
             console.error(error);
         }
-
     }
+
+    async getUsers(accessToken, active = undefined) {
+        try {
+
+            const url = `${this.baseApi}/${ENV.API_ROUTES.USERS}?active=${active}`;
+            const params = {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+
+            const response = await fetch(url, params);
+            const result = await response.json();
+
+            if (response.status !== 200) throw result;
+            return result;
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
