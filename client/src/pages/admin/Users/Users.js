@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./Users.scss";
 import { Button, Tab } from 'semantic-ui-react';
 import { BasicModal } from "../../../components/Shared";
+import { UserForm } from '../../../components/Admin/Users';
 
 export function Users() {
 
@@ -16,7 +17,6 @@ export function Users() {
         <Tab.Pane attached={false}>
           <h2>Active Users</h2>
         </Tab.Pane>
-
       ),
     },
     {
@@ -25,7 +25,6 @@ export function Users() {
         <Tab.Pane attached={false}>
           <h2>Inactive Users</h2>
         </Tab.Pane>
-
       ),
     },
   ];
@@ -43,7 +42,9 @@ export function Users() {
 
       {/* show, close, title, size, children */}
       <BasicModal show={showModal} close={onOpenCloseModal} title="Create new user"  >
-        <h2>Form to create new users</h2>
+        {/* <h2>Form to create new users</h2> */}
+        {/* close, onReload, user  */}
+        <UserForm close={onOpenCloseModal} />
       </BasicModal>
 
     </>
