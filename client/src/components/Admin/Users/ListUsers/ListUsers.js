@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Loader } from 'semantic-ui-react';
-import { size } from "lodash";
+import { size, map } from "lodash";
 import { User } from "../../../../api";
 import { useAuth } from "../../../../hooks";
-
+import { UserItem } from "../UserItem";
 
 const userController = new User();
 
@@ -12,9 +12,7 @@ export function ListUsers(props) {
     const { usersActive } = props;
     const [users, setUsers] = useState(null);
     const { accessToken } = useAuth();
-
     //console.log(users);
-
     useEffect(() => {
         (async () => {
             try {
@@ -31,10 +29,11 @@ export function ListUsers(props) {
      if (!users) return <Loader active inline="centered" />
      if (size(users) === 0) return "there is no user";
 
-    return (
-        <div>
-            <h2>We are displaying users</h2>
-            <p>{usersActive ? "Active" : "Inactive"}</p>
-        </div>
-    );
+    return map(users, (user) => (
+        <>
+        <UserItem key={user._id} user={user} />
+        </>
+
+
+    ))
 }
