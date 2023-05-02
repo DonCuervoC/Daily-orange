@@ -9,7 +9,7 @@ $widhLeftMenu: 200px;
     background-color: $background-grey;
 
     &__left {
-        background-color: $background-dark;
+        background-color: $background-dark-web;
         width: $widhLeftMenu;
 
         .logo {
@@ -23,7 +23,7 @@ $widhLeftMenu: 200px;
         width: calc(100% - $widhLeftMenu );
 
         &-header {
-            background-color: $background-dark;
+            background-color: $background-dark-web;
             height: 50px;
             display: flex;
             align-items: center;
