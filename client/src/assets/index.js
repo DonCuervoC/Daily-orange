@@ -4,6 +4,7 @@ import authBg from "./jpg/auth-bg.jpg";
 import homeBanner from "./jpg/home-banner.jpg";
 import noAvatar from "./jpg/no-avatar.jpg";
 import academyLogo from "./png/academy-logo.png";
+import alienAvatar from "./png/no-avatar1.png";
 
 const Icon = {
     LogOrange,
@@ -16,6 +17,7 @@ const Images = {
     homeBanner,
     noAvatar,
     academyLogo,
+    alienAvatar,
 };
 
 export { Icon, Images };

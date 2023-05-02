@@ -1,6 +1,8 @@
-import React from 'react';
-import { Form } from 'semantic-ui-react';
+import React, { useCallback } from 'react';
+import { Form, Image } from 'semantic-ui-react';
 import { useFormik } from "formik";
+import { useDropzone } from "react-dropzone";
+import { Images } from "../../../../assets";
 import { initialValues, validationSchema } from "./UserForm.form";
 import "./UserForm.scss";
 
@@ -18,12 +20,34 @@ export function UserForm(props) {
                 console.error(error);
             }
         }
-    })
+    });
+
+    const onDrop = useCallback((acceptedFiles) => {
+       // console.log(acceptedFiles);
+       const file = acceptedFiles[0];
+       formik.setFieldValue("avatar", URL.createObjectURL(file));
+       formik.setFieldValue("fileAvatar", file);
+
+    });
+
+    const {getRootProps, getInputProps} = useDropzone({
+        accept: "image/jpeg, image/png  ", 
+        onDrop,
+    });
+
+    const getAvatar = () => {
+        if(formik.values.fileAvatar){
+            return formik.values.avatar;
+        }
+        return Images.alienAvatar;
+    };
 
     return (
         <Form className='user-form' onSubmit={formik.handleSubmit} >
-            <div className='user-form__avatar'>
-                <span>AVATAR</span>
+            <div className='user-form__avatar' {...getRootProps()}>
+                <input {...getInputProps()} /> 
+                <Image avatar size="small" src={getAvatar()}/>      
+                {/* <span>AVATAR</span> */}
             </div>
 
             <Form.Group widths="equal">
@@ -41,8 +65,8 @@ export function UserForm(props) {
                     selection
                     onChange={(__, data) => formik.setFieldValue("role", data.value)}
                     value={formik.values.role}
-                    error={formik.errors.role}
-                />
+                    error={formik.errors.role} 
+                    />
             </Form.Group>
 
             <Form.Input type='password' name="password" placeholder="Password"
