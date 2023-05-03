@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Button, Icon, Confirm } from 'semantic-ui-react';
 import { Images } from "../../../../assets";
 import { ENV } from "../../../../utils";
+import { BasicModal } from "../../../Shared";
+import { UserForm } from "../UserForm";
 import "./UserItem.scss";
 
 export function UserItem(props) {
     const { user } = props;
-    //console.log(user);
+    // console.log(user);
+    const [showModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState("");
+
+    const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
+
+    const openUpdateUSer = () => {
+
+        setTitleModal(`Update ${user.email}`);
+        onOpenCloseModal();
+    }
 
     return (
         <>
@@ -19,12 +31,12 @@ export function UserItem(props) {
                     </div>
                 </div>
                 <div>
-                    <Button icon primary>
+                    <Button icon primary onClick={openUpdateUSer}>
                         <Icon name='pencil' />
                     </Button>
 
-                    <Button icon color={user.active? "orange" : "teal"}>
-                        <Icon name={user.active? "ban" : "check"} />
+                    <Button icon color={user.active ? "orange" : "teal"}>
+                        <Icon name={user.active ? "ban" : "check"} />
                     </Button>
 
                     <Button icon color='red'>
@@ -32,6 +44,13 @@ export function UserItem(props) {
                     </Button>
                 </div>
             </div>
+            {/* show, close, title, size, children */}
+            <BasicModal show={showModal} close={onOpenCloseModal} title={titleModal}>
+                <UserForm close={onOpenCloseModal}
+                    onReload={() => console.log("RELOAD")}
+                    user={user}
+                />
+            </BasicModal>
         </>
     );
 }

@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { Images } from "../../../../assets";
 import { User } from "../../../../api";
 import { useAuth } from "../../../../hooks";
+import { ENV } from "../../../../utils"
 import { initialValues, validationSchema } from "./UserForm.form";
 import "./UserForm.scss";
 
@@ -13,17 +14,23 @@ const userController = new User();
 export function UserForm(props) {
     const { close, onReload, user } = props;
     //console.log(useAuth());
+    //console.log(user);
     const { accessToken } = useAuth();
     //console.log("Access Token : " , accessToken);
 
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: validationSchema(),
+        initialValues: initialValues(user),
+        validationSchema: validationSchema(user),
         validateOnChange: false,
         onSubmit: async (formValue) => {
             try {
                 //console.log(formValue);
-                await userController.createUser(accessToken, formValue);
+                if (!user) {
+                    await userController.createUser(accessToken, formValue);
+                } else {
+                    console.log("UPDATE");
+                    console.log(formValue);
+                }
                 onReload();
                 close();
             } catch (error) {
@@ -33,21 +40,23 @@ export function UserForm(props) {
     });
 
     const onDrop = useCallback((acceptedFiles) => {
-       // console.log(acceptedFiles);
-       const file = acceptedFiles[0];
-       formik.setFieldValue("avatar", URL.createObjectURL(file));
-       formik.setFieldValue("fileAvatar", file);
+        // console.log(acceptedFiles);
+        const file = acceptedFiles[0];
+        formik.setFieldValue("avatar", URL.createObjectURL(file));
+        formik.setFieldValue("fileAvatar", file);
 
     });
 
-    const {getRootProps, getInputProps} = useDropzone({
-        accept: "image/jpeg, image/png  ", 
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: "image/jpeg, image/png  ",
         onDrop,
     });
 
     const getAvatar = () => {
-        if(formik.values.fileAvatar){
+        if (formik.values.fileAvatar) {
             return formik.values.avatar;
+        } else if (formik.values.avatar) {
+            return `${ENV.BASE_PATH}/${formik.values.avatar}`;
         }
         return Images.alienAvatar;
     };
@@ -55,8 +64,8 @@ export function UserForm(props) {
     return (
         <Form className='user-form' onSubmit={formik.handleSubmit} >
             <div className='user-form__avatar' {...getRootProps()}>
-                <input {...getInputProps()} /> 
-                <Image avatar size="small" src={getAvatar()}/>      
+                <input {...getInputProps()} />
+                <Image avatar size="small" src={getAvatar()} />
                 {/* <span>AVATAR</span> */}
             </div>
 
@@ -75,8 +84,8 @@ export function UserForm(props) {
                     selection
                     onChange={(__, data) => formik.setFieldValue("role", data.value)}
                     value={formik.values.role}
-                    error={formik.errors.role} 
-                    />
+                    error={formik.errors.role}
+                />
             </Form.Group>
 
             <Form.Input type='password' name="password" placeholder="Password"
