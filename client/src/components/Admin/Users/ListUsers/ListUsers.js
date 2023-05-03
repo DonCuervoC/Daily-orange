@@ -9,7 +9,7 @@ const userController = new User();
 
 export function ListUsers(props) {
 
-    const { usersActive, reload } = props;
+    const { usersActive, reload, onReload } = props;
     const [users, setUsers] = useState(null);
     const { accessToken } = useAuth();
     //console.log(users);
@@ -31,7 +31,7 @@ export function ListUsers(props) {
 
     return map(users, (user) => (
         <>
-        <UserItem key={user._id} user={user} />
+        <UserItem key={user._id} user={user} onReload={onReload} />
         </>
 
 

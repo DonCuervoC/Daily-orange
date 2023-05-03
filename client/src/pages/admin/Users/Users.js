@@ -18,7 +18,7 @@ export function Users() {
       render: () => (
         <Tab.Pane attached={false}>
            {/* <h2>Active Users</h2>  */}
-          <ListUsers usersActive={true} reload={reload} />
+          <ListUsers usersActive={true} reload={reload} onReload={onReload} />
         </Tab.Pane>
       ),
     },
@@ -27,7 +27,7 @@ export function Users() {
       render: () => (
         <Tab.Pane attached={false}>
           {/* <h2>Inactive Users</h2> */}
-          <ListUsers usersActive={false} reload={reload} />
+          <ListUsers usersActive={false} reload={reload} onReload={onReload} />
         </Tab.Pane>
       ),
     },

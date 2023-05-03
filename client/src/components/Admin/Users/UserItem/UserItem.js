@@ -7,7 +7,7 @@ import { UserForm } from "../UserForm";
 import "./UserItem.scss";
 
 export function UserItem(props) {
-    const { user } = props;
+    const { user , onReload} = props;
     // console.log(user);
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
@@ -47,7 +47,7 @@ export function UserItem(props) {
             {/* show, close, title, size, children */}
             <BasicModal show={showModal} close={onOpenCloseModal} title={titleModal}>
                 <UserForm close={onOpenCloseModal}
-                    onReload={() => console.log("RELOAD")}
+                    onReload={onReload}
                     user={user}
                 />
             </BasicModal>
