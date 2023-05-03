@@ -5,10 +5,12 @@ import { BasicModal } from "../../../components/Shared";
 import { UserForm, ListUsers } from '../../../components/Admin/Users';
 
 export function Users() {
-
   const [showModal,setShowModal] = useState(false);
+  const [reload, setReload] = useState(false);
 
-  const onOpenCloseModal = () => setShowModal((prevState) => !prevState)
+  const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
+
+  const onReload = () => setReload((prevState) => !prevState);
 
   const panes = [
     {
@@ -16,7 +18,7 @@ export function Users() {
       render: () => (
         <Tab.Pane attached={false}>
            {/* <h2>Active Users</h2>  */}
-          <ListUsers usersActive={true} />
+          <ListUsers usersActive={true} reload={reload} />
         </Tab.Pane>
       ),
     },
@@ -25,7 +27,7 @@ export function Users() {
       render: () => (
         <Tab.Pane attached={false}>
           {/* <h2>Inactive Users</h2> */}
-          <ListUsers usersActive={false} />
+          <ListUsers usersActive={false} reload={reload} />
         </Tab.Pane>
       ),
     },
@@ -46,7 +48,7 @@ export function Users() {
       <BasicModal show={showModal} close={onOpenCloseModal} title="Create new user"  >
         {/* <h2>Form to create new users</h2> */}
         {/* close, onReload, user  */}
-        <UserForm close={onOpenCloseModal} />
+        <UserForm close={onOpenCloseModal} onReload={onReload} />
       </BasicModal>
 
     </>

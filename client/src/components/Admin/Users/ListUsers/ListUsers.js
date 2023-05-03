@@ -9,7 +9,7 @@ const userController = new User();
 
 export function ListUsers(props) {
 
-    const { usersActive } = props;
+    const { usersActive, reload } = props;
     const [users, setUsers] = useState(null);
     const { accessToken } = useAuth();
     //console.log(users);
@@ -24,7 +24,7 @@ export function ListUsers(props) {
             }
         })()
 
-    }, [usersActive])
+    }, [usersActive,reload])
 
      if (!users) return <Loader active inline="centered" />
      if (size(users) === 0) return "there is no user";

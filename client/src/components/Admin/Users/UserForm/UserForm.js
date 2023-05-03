@@ -24,7 +24,8 @@ export function UserForm(props) {
             try {
                 //console.log(formValue);
                 await userController.createUser(accessToken, formValue);
-                //close();
+                onReload();
+                close();
             } catch (error) {
                 console.error(error);
             }
