@@ -23,7 +23,7 @@ export function ListMenu(props) {
                 console.error(error);
             }
         })()
-    }, [active])
+    }, [active,reload])
 
     if (!menus) return <Loader active inline="centered" />
     if (size(menus) === 0) return "there is no menu";

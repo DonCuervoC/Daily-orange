@@ -1,11 +1,16 @@
 import React from 'react';
 import { Button, Dropdown, Form, Input } from 'semantic-ui-react';
 import { useFormik } from "formik";
+import { Menu } from "../../../../api";
+import { useAuth } from "../../../../hooks";
 import { initialValues, validationSchema } from "./MenuForm.form";
+
+const menuController = new Menu();
 
 export function MenuForm(props) {
 
     const { onClose, onReload, menu } = props;
+    const { accessToken } = useAuth();
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -13,7 +18,21 @@ export function MenuForm(props) {
         validateOnChange: false,
         onSubmit: async (formValue) => {
             try {
-                console.log(formValue);
+                //console.log(formValue);
+                const data = {
+                    title: formValue.title,
+                    path: `${formValue.protocol}${formValue.path}`,
+                    order: formValue.order,
+                    active: formValue.active,
+                };
+                // console.log(data);
+                if (menu) {
+                    console.log("UPDATE MENU");
+                } else {
+                    await menuController.createMenu(accessToken, data);
+                }
+                onReload();
+                onClose();
             } catch (error) {
                 console.log(error);
                 console.error(error);
@@ -50,7 +69,7 @@ export function MenuForm(props) {
                         value={formik.values.protocol}
                         error={formik.errors.protocol}
                     />
-                ) : null }
+                ) : null}
             />
 
             <Form.Group />

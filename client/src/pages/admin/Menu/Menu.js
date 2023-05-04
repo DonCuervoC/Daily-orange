@@ -44,7 +44,7 @@ export function Menu() {
       </div>
 
       <BasicModal show={showModal} close={onOpenCloseModal} title="Create new menu" >
-        <MenuForm close={onOpenCloseModal} onReload={setReload} />
+        <MenuForm onClose={onOpenCloseModal} onReload={onReload} />
       </BasicModal>
 
     </>
