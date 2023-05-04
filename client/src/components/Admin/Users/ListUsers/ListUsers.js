@@ -33,7 +33,5 @@ export function ListUsers(props) {
         <>
         <UserItem key={user._id} user={user} onReload={onReload} />
         </>
-
-
     ))
 }
