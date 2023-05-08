@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 
-export function initialValues() {
+export function initialValues(menu) {
     return {
-        title: "",
-        path: "",
+        title: menu?.title || "",
+        path: menu?.path || "",
         protocol: "https://",
-        active: true,
-        order: undefined,
+        active: menu?.active ||true,
+        order: menu?.order || undefined,
     };
 }
 
