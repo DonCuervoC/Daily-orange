@@ -7,7 +7,9 @@ import "./ListCourses.scss";
 
 const courseController = new Course();
 
-export function ListCourses() {
+export function ListCourses(props) {
+
+    const { reload } = props;
 
     const [courses, setCourses] = useState(false);
     const [page, setPage] = useState(1);
@@ -30,7 +32,7 @@ export function ListCourses() {
                 console.error(error);
             }
         })();
-    }, [page]);
+    }, [page, reload]);
 
     if (!courses) return <Loader active inline="centered" />
     if (size(courses) === 0) return "Not course was found";
