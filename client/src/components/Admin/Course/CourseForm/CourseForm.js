@@ -2,27 +2,36 @@ import React, { useCallback } from 'react';
 import { Form, Image } from 'semantic-ui-react';
 import { useDropzone } from "react-dropzone";
 import { useFormik } from "formik";
-import { Course} from "../../../../api";
+import { Course } from "../../../../api";
 import { useAuth } from "../../../../hooks";
 import { initialValues, validationSchema } from "./CourseForm.form";
+import { ENV } from "../../../../utils"
 import "./CourseForm.scss";
 
 const courseController = new Course();
 
 export function CourseForm(props) {
-    const {onClose, onReload} = props;
+    const { onClose, onReload, course } = props;
 
     const { accessToken } = useAuth();
 
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(course),
         validationSchema: validationSchema(),
         validateOnChange: false,
         onSubmit: async (formValue) => {
 
             try {
                 // console.log(formValue);
-                await courseController.createCourse(accessToken, formValue);
+                if(!course){
+                    //create
+                    await courseController.createCourse(accessToken, formValue);
+                }else{
+                    //update
+                    await courseController.updateCourse(accessToken, course._id, formValue);
+                }
+
+
                 //refresh course list
                 onReload();
                 //Close modal
@@ -50,13 +59,13 @@ export function CourseForm(props) {
 
     const getMiniature = () => {
 
-        if(formik.values.file){
-            // upload manually
+        if (formik.values.file) {
+            // upload image manually
             return formik.values.miniature;
-            // from server
-        } /*else if (formik.values.miniature){
-            return "";
-        }*/
+            // image from server, means it's an update
+        } else if (formik.values.miniature) {
+            return `${ENV.BASE_PATH}/${formik.values.miniature}`;
+        }
         return null;
     };
 
@@ -102,7 +111,7 @@ export function CourseForm(props) {
             </Form.Group>
 
             <Form.Button type='submit' primary fluid loading={formik.isSubmitting}>
-                Create course
+                {!course ? "Create course" : "Update course"}
             </Form.Button>
 
         </Form>
