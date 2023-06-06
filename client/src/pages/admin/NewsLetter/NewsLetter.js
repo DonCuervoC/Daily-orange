@@ -1,9 +1,24 @@
-import React from 'react'
+import React from 'react';
+import { Tab } from 'semantic-ui-react';
+import {ListEmails } from "../../../components/Admin/Newsletter";
 
-export  function NewsLetter() {
+const panes = [
+  {
+    render: () => (
+      <Tab.Pane attached={false}>
+        <ListEmails />
+      </Tab.Pane>
+    ),
+  },
+];
+
+export function NewsLetter() {
   return (
-    <div>
-      <h1>We are in pages/admin/NewsLetter/NewsLetter.js</h1>
+    <div className='newsletter-page'>
+
+
+      <Tab menu={{ secondary: true }} panes={panes} />
+
     </div>
   )
 }

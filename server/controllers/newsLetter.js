@@ -29,19 +29,16 @@ async function subscribe(req, res) {
 async function getSuscribers(req, res){
 
     const { page = 1, limit = 10 } = req.query;
-
-    const options ={
-
+    const options = {
         page: parseInt(page),
-        limit: parseInt(limit),
-    };
+        limit: parseInt(limit)
+    }
 
-    Newsletter.paginate({},options,(error, emailsStored) => {
-
-        if(error){
-            res.status(400).json({ msg: "Error  while getting suscribers" });
-        }else{
-            res.status(400).json(emailsStored);
+    Newsletter.paginate({}, options, (error, emailsStored) => {
+        if (error) {
+            res.status(400).send({ msg: "Error al obtener los emails" });
+        } else {
+            res.status(200).send(emailsStored);
         }
     })
 }
